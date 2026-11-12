@@ -1,13 +1,13 @@
 # Chevron [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE.md) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 
-## forked from kholmogorov27/chevron
+> Fork of [kholmogorov27/chevron](https://github.com/kholmogorov27/chevron), modernised (React 19, Vite 8, clean architecture, tests) with bug fixes.
 
 <p align=center>
   <img width="80%" src="https://i.imgur.com/Wa7HcuW.png">
 </p>
 
 <p align=center>
-  Сhevron is a <i>powerful</i> and highly <i>functional</i> startpage integrated with chatGPT<br/> and hidden under the super <i>minimalistic</i> and <i>animated</i> design
+  Сhevron is a <i>powerful</i> and highly <i>functional</i> startpage<br/> hidden under the super <i>minimalistic</i> and <i>animated</i> design
 </p>
 
 <p align=center>
@@ -32,12 +32,18 @@
   - [Hosted](#hosted)
   - [GitHub Pages](#github-pages)
     </font>
+- [Build](#build)
+- [Development](#development)
+  <font size=2>
+  - [Architecture](#architecture)
+    </font>
 - [Usage](#usage)
   <font size=2>
-  - [Macros and commands](#macros-and-commands)
+  - [Websites (closest match)](#websites-closest-match)
+  - [Commands](#commands)
   - [Macros menu](#macros-menu)
   - [Hotkeys](#hotkeys)
-  - [ChatGPT](#chatgpt)
+  - [Currency converter](#currency-converter)
     </font>
 - [Configuration](#configuration)
   <font size=2>
@@ -49,7 +55,7 @@
 
 ## Features
 
-autosuggestions, history, macros and commands, macros menu, hotkeys, chatGPT integration, currency converter, calculator, animated and minimalist design
+closest-match website suggestions, autosuggestions, history, commands, macros menu, hotkeys, currency converter, calculator, animated and minimalist design
 
 ## Screenshots
 
@@ -94,128 +100,128 @@ You can set Chevron as the homepage (in the browser settings) or the new tab (yo
 <a id="focus-problem"></a>
 
 > **Warning**
-> If you want the app itself to be focused when opening a new tab and not the address bar,  
+> If you want the app itself to be focused when opening a new tab and not the address bar,
 > I recommend [this](https://chrome.google.com/webstore/detail/new-tab-redirect/icpgjfneehieebagbmdbhnlpiopdcmna) extension in tandem with the [hosted](#hosted) or [github pages](#github-pages) installation method for all chromium based browsers (_Google Chrome, Microsoft Edge, Brave, Opera, Vivaldi etc_)
 
 There are a few ways to install Chevron:
 
 ### Static _<sup>(recommended)</sup>_
 
-> This method is **recommended** because it doesn't depend on your internet connection or any remote servers, and the UI will be loaded instantly.  
+> This method is **recommended** because it doesn't depend on your internet connection or any remote servers, and the UI will be loaded instantly.
 > Some browser and extensions might have [the focus problem](#focus-problem)
 
-1. Download [the latest release](https://github.com/kholmogorov27/chevron/releases/latest)
-1. Unzip the archive in any convenient place
+1. [Build](#build) the app (or download a release)
+1. Open `dist/index.html` from your browser, or set it as your homepage (`file:///path/to/dist/index.html`)
 
 ### Hosted
 
-> This method is useful when you want to fix [the focus problem](#focus-problem) or for any other reason the _Local file_ method doesn't work for you
+> This method is useful when you want to fix [the focus problem](#focus-problem) or for any other reason the _Static_ method doesn't work for you
 
-> **Note**
-> This method assumes that you have [Node.js and npm](https://nodejs.org/en/download/) installed on your PC
-
-1. Clone this repository
-1. [Build](#build)
-1. Install node-(_windows/linux/mac_)
-
-   _for Windows:_
+1. [Build](#build) the app
+1. Start the local server: `npm run serve` (Chevron is then available on **_localhost:8000_**, set `PORT` to change it)
+1. _(optional)_ register the server as a system service so it starts with your computer:
 
    ```bash
-   npm install -g node-windows && npm link node-windows
+   npm install -g node-linux && npm link node-linux   # or node-windows / node-mac
+   npm run register_linux                               # or register_windows / register_mac
    ```
-
-   _for Linux:_
-
-   ```bash
-   npm install -g node-linux && npm link node-linux
-   ```
-
-   _for Mac:_
-
-   ```bash
-   npm install -g node-mac && npm link node-mac
-   ```
-
-1. Register the local server as a system service
 
    > **Note**
-   > Administrator privileges are required to run this command
-
-   _for Windows:_
-
-   ```bash
-   npm run register_windows
-   ```
-
-   _for Linux:_
-
-   ```bash
-   npm run register_linux
-   ```
-
-   _for Mac:_
-
-   ```bash
-   npm run register_mac
-   ```
-
-   This operation will create a service in your system to run the server on startup.
-
-   To uninstall the service, run the command again.
-
-After you register the server, you will be able to access Chevron on **_localhost:8000_**
+   > Administrator privileges are required. Run the command again to uninstall the service.
 
 ### GitHub Pages
 
 > This method **isn't recommended** because it depends on your internet connection and GitHub servers
 
 1. Fork this repository
+1. Run `npm run deploy` (builds the app and pushes `dist/` to the `gh-pages` branch)
 1. Go `Settings` &rarr; `Pages` &rarr; <code>Branch: <i>"gh-pages"</i></code> &rarr; `Save`
-1. Wait until your link will appear
 
 ## Build
 
-> **Note** > [Node.js and npm](https://nodejs.org/en/download/) are required
+> **Note**
+> [Node.js](https://nodejs.org/en/download/) **22.22 or newer** is required (Node 24 LTS recommended)
 
-1. Install dependencies
+```bash
+npm install
+npm run build
+```
 
-   ```bash
-   npm install
-   ```
+After building, you can find all the necessary files in the `/dist` folder: the whole app is inlined in `index.html`, next to the user editable files (`config.js`, `icons.js`, fonts).
 
-1. Build
+## Development
 
-   ```bash
-   npm run build
-   ```
+| Command            | Description                                  |
+| ------------------ | -------------------------------------------- |
+| `npm run dev`      | Development server with hot reload           |
+| `npm run build`    | Production build in `dist/`                  |
+| `npm run preview`  | Serve the production build                   |
+| `npm run serve`    | Serve `dist/` on port 8000 (hosted method)   |
+| `npm test`         | Tests in watch mode (Vitest)                 |
+| `npm run test:run` | Run the tests once                           |
+| `npm run lint`     | Lint the code (ESLint)                       |
+| `npm run deploy`   | Build and publish to GitHub Pages            |
 
-After building, you can find all the necessary files in the `/dist` folder
+### Architecture
+
+The code follows a simple **clean architecture**: dependencies only point inwards
+(`presentation → application → domain`), and the technical details (`infrastructure`) are plugged in
+at a single place, `src/main.jsx`, then given to the UI through a React context (`useServices()`).
+
+```
+src/
+├── main.jsx            Composition root: builds the services and renders the app
+├── domain/             Pure logic, no React and no browser API
+│   ├── query/          Query parsing: closest websites, commands, direct URLs, search URL
+│   ├── suggestions/    Merging and ranking of suggestions
+│   ├── currency/       Currency conversion queries ("100 usd to eur")
+│   ├── colors/         Gradients, generated colors, APCA contrast
+│   └── settings/       Merge of saved settings with the defaults
+├── application/        Use cases: search history, settings, currency conversion
+├── infrastructure/     localStorage, Google autocomplete (JSONP), exchange rates API,
+│                       user config (config.js / icons.js)
+├── presentation/       React UI: App, components, hooks, contexts, settings schema
+└── test/               Test setup and fixtures
+```
+
+Tests live next to the code they cover (`*.test.js(x)`).
 
 ## Usage
 
 To use Chevron's main functionality, just type something (you don't need to worry about focus on the input field, it is always in focus at the right moment).
 
-As soon as you type something, the query will be parsed and suggestions will be given.
+As soon as you type something, the query is parsed and suggestions are shown: the closest websites first, then your history and the [search suggestions](#autocomplete). You can limit the number of suggestions of each source in the settings.
 
-Suggestions generates from history and autosuggestion engine. You can limit number of suggestions for each source is settings.
+By default, <kbd>Enter</kbd> searches on DuckDuckGo. If what you typed clearly designates one of your websites, <kbd>Enter</kbd> opens it instead.
 
-By default, you will be redirected to the search page of the search engine, however if the query matches a trigger of a macro, redirecting to this query will take you to the URL, specified in macro properties (`url` property).
+- #### **Websites (closest match)**:<br/>
 
-- #### **Macros and commands**:<br/>
+  There is no shortcut to learn: Chevron compares what you type with the **name**, the **keywords** and the **domain** of the websites of `config.js`, and the matching websites always come first.
 
-  _<span style="color: orange">Macro</span>_ is something like a bookmark. It helps access your frequently visited websites.<br/>
-  To use a macro, your query must match one of its triggers.
-  <pre><span style="color: grey">></span> <span style="color: orange">gh</span></pre>
+  - If a website name (or keyword) **starts with** what you typed, <kbd>Enter</kbd> opens it, even after a single letter.
+  - Names win over keywords, then **the order of `config.js` breaks ties**: put your favourite websites first.
+  - Typos and skipped letters only _suggest_ the website (first suggestion: <kbd>↓</kbd> then <kbd>Enter</kbd>).
+  - Anything else is searched on DuckDuckGo.
 
-  _<span style="color: limegreen">Command</span>_ is an addition to macros. With commands you can implement some website logic by modifying the URL.<br/>
-  To use a command, you need to put the command after a trigger of a macro (the command must be defined in the global and macro commands lists). Everything going after a command is _<span style="color: steelblue">argument</span>_.
-  <pre><span style="color: grey">></span> <span style="color: orange">so</span><span style="color: limegreen">?</span><span style="color: steelblue">how to parse html with regex</span></pre>
+  | You type      | <kbd>Enter</kbd> opens                       |
+  | ------------- | -------------------------------------------- |
+  | `y`           | **YouTube**                                  |
+  | `a`           | **Amazon** (name before Claude's keyword "ai") |
+  | `c`           | **Claude** (first in `config.js`), then Canal+, Correcteur... suggested |
+  | `disnye`      | DuckDuckGo search, **Disney+** suggested first |
+  | `meteo paris` | DuckDuckGo search                            |
 
-  To ignore macros and force using search engine press <kbd><font size=3>Ctrl</font></kbd>
+- #### **Commands**:<br/>
+
+  A command after a website name opens a specific page of that website. Everything after the command symbol is the _argument_:
+  <pre><span style="color: grey">></span> <span style="color: orange">netflix</span><span style="color: limegreen">?</span><span style="color: steelblue">stranger things</span>       search on Netflix
+<span style="color: grey">></span> <span style="color: orange">youtube</span><span style="color: limegreen">/</span><span style="color: steelblue">dQw4w9WgXcQ</span>            open a video</pre>
+
+  To ignore websites and force the search engine, hold <kbd><font size=3>Ctrl</font></kbd>.
 
 - #### **Macros menu**:
 
-  Macros can be pinned to macros menu.
+  Pinned websites are shown in the macros menu.
 
   **_Controls_**:
 
@@ -235,19 +241,19 @@ By default, you will be redirected to the search page of the search engine, howe
 
 - #### **Hotkeys**:
 
-  You can use hotkeys to quickly call macros which have `key` property.
+  <kbd><font size=3>Shift</font></kbd> + \<**key**\> opens the pinned website that has this `key` (e.g. <kbd>Shift</kbd> + <kbd>N</kbd> for Netflix).
 
-  <kbd><font size=3>Shift</font></kbd> + \<**key**\>
+- #### **Currency converter**:
 
-  > macro must be `pinned`
+  Type a conversion such as `100 usd to eur`: the result appears as the first suggestion.
+  Rates come from the free [ExchangeRate-API](https://www.exchangerate-api.com/) open access endpoint (no key needed, fiat currencies only).
 
-- #### **ChatGPT**:
+<a id="autocomplete"></a>
 
-  Before using ChatGPT you need to specify your [OpenAI API key](https://platform.openai.com/account/api-keys) in `Settings` &rarr; `Query` &rarr; `AI` &rarr; `Api key`.
+- #### **Search suggestions**:
 
-  > the key is stored locally on your computer
-
-  To use ChatGPT integration double press <kbd><font size=3>Space</font></kbd> after you typed a query.
+  They come from Google's public autocomplete endpoint, in the language of the `Locale` setting (`fr` by default).
+  DuckDuckGo also has one, but it cannot be read from a web page (no CORS nor JSONP support).
 
 ## Configuration
 
@@ -264,58 +270,50 @@ You can click the _show/hide_ icon at the bottom of the **Settings** window to s
 
 ### config.js
 
-You can edit **_Macros_** and **_Commands_** only in the `/config.js` file yet.
+Websites and commands are edited in `/config.js` (next to `index.html`, no rebuild needed).
+It contains a single JS object named **CONFIG** with 3 properties:
 
-`/config.js` contains a single JS object named **CONFIG** which has 3 properties:
-
-- **macros** `Array`
-
-  structure:
+- **macros** `Array`: your websites
 
   ```javascript
   {
-    name: string, // macros name
-    category: string, // category of the macros
-    url: string, // full macros URL
-    normalisedURL: string, // normalised URL (secondLevelDomain + '.' + firstLevelDomain)
-    triggers: [ string, ... ], // list of triggers
-    commands: { // commands of the macro
+    name: string, // displayed name, used for the closest match
+    category: string, // category (informative)
+    url: string, // page opened
+    keywords: [ string, ... ], // (optional) other names, e.g. ['wiki'] for Wikipédia
+    commands: { // (optional) commands of the website
       [type]: {
-        // {@} - macros URL
+        // {@} - website URL
         // {$} - command argument
         template: string, // URL template
-        description (optional): string // description of the command for this macros
+        description: string // (optional) label shown while typing
       }
     },
     bgColor: complexColor, // background color
-    textColor: string, // text color
-    pinned: boolean, // is the macros pinned in the Macros Menu
-    key: (optional): string, // hotkey ('key' + <keyName>)
-    icon: (optional): string // the name of the icon in the "/icons.js" file
+    textColor: string, // icon / text color
+    pinned: boolean, // shown in the macros menu
+    key: string, // (optional) hotkey: 'Key' + letter, e.g. 'KeyN'
+    icon: string // (optional) name of an SVG in "/icons.js", the initial of the name is shown otherwise
   }
   ```
 
 - **commands** `Array`
 
-  structure:
-
   ```javascript
   {
     type: string, // command type (name)
-    trigger: string // command trigger (preferably a symbol)
+    trigger: string // symbol typed between the website name and the argument
   }
   ```
 
-- **engines** `Object`
-
-  structure:
+- **engine** `Object`: the search engine (DuckDuckGo)
 
   ```javascript
   {
-    name: string, // engine name
-    bgColor: complexColor, // background color
-    textColor: string, // text color
-    types: { // query, calculator, currency, ...
+    name: string,
+    bgColor: complexColor,
+    textColor: string,
+    types: { // query (required), calculator, currency
       [type]: {
         // {@} - raw query (what user typed)
         // {$} - parsed query (what is in the query field)
@@ -325,7 +323,7 @@ You can edit **_Macros_** and **_Commands_** only in the `/config.js` file yet.
   }
   ```
 
-Because of the limitations of the CORS policy, macros icons must be stored in `/icons.js` in the `ICONS` object. You can put there any valid HTML SVG as a string
+Because of the limitations of the CORS policy, icons must be stored in `/icons.js` in the `ICONS` object. You can put there any valid HTML SVG as a string.
 
 > **Warning**
 > be aware of quotes
@@ -343,16 +341,16 @@ Because of the limitations of the CORS policy, macros icons must be stored in `/
 - [ ] Macros Menu categories
 - [ ] Localisation
 - [x] LocalStorage reset buttons
-- [ ] Refactor search engines system
+- [x] Refactor search engines system (single engine: DuckDuckGo)
 - [ ] Time settings
 
 ## Technologies
 
-- [React](https://reactjs.org/)
+- [React 19](https://react.dev/)
 - MUI ([Joy UI](https://mui.com/joy-ui/getting-started/overview/))
-- [Framer-motion](https://www.framer.com/motion/)
+- [Motion](https://motion.dev/)
 - [Splide](https://splidejs.com/)
-- [Vite](https://vitejs.dev/)
+- [Vite](https://vite.dev/) and [Vitest](https://vitest.dev/)
 
 > <font size=2 color=grey>JS, CSS, HTML, <a href="https://github.com/Myndex/SAPC-APCA">APCA</a> (from <a href="https://colorjs.io/">color.js</a>)</font>
 

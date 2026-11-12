@@ -1,31 +1,34 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/public/font.css">
+    <link rel="stylesheet" href="./font.css" />
     <title>Chevron</title>
 
-    <!-- coloration -->
+    <!-- paint the theme background before the app loads (no white flash) -->
     <script>
-      const settings = JSON.parse(localStorage.getItem('settings'))
-      if (settings) {
-        const colorScheme = settings.appearance.colorScheme === 'auto'
-          ? window.matchMedia("(prefers-color-scheme: dark)").matches
-            ? 'dark'
-            : 'light'
-          : settings.appearance.colorScheme
-  
-        document.documentElement.style.backgroundColor = settings.appearance.themes[settings.appearance.activeTheme][colorScheme].background
+      try {
+        const settings = JSON.parse(localStorage.getItem('settings'))
+        const appearance = settings && settings.appearance
+        if (appearance) {
+          const colorScheme =
+            appearance.colorScheme === 'auto' || !appearance.colorScheme
+              ? matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+              : appearance.colorScheme
+          const theme = appearance.themes[appearance.activeTheme] || appearance.themes.default
+          document.documentElement.style.backgroundColor = theme[colorScheme].background
+        }
+      } catch {
+        /* no or invalid saved settings: keep the default background */
       }
     </script>
-    <!-- -->
-
   </head>
   <body>
     <div id="root"></div>
-    <script src="config.js"></script>
-    <script src="icons.js"></script>
+    <!-- user configuration, editable after the build (see README) -->
+    <script src="./config.js"></script>
+    <script src="./icons.js"></script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
